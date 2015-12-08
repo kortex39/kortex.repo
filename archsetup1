@@ -1,0 +1,28 @@
+#!/bin/bash
+#Version 1.0
+echo Installation de Archlinux
+#Préparation des disques
+echo Choix du/des disque sur lequel installer votre distribution
+ls /dev/sd*
+read -e -p "/ (ex /dev/sda) " SLASH
+read -e -p "/home (ex /dev/sda) " HOME
+read -e -p "/BOOT (ex /dev/sda) " BOOT
+read -e -p "/TMP (ex /dev/sda) " TMP
+echo / $SLASH
+echo /home $HOME
+echo /boot $BOOT
+echo /boot $TMP
+#Montage des partitions
+echo Montage des partitions
+mount $SLASH /mnt
+mkdir /mnt/{home,boot,tmp}
+mount $BOOT /mnt/boot
+mount $HOME /mnt/home
+mount $TMP /mnt/tmp
+#Installation du systeme de base
+echo installation des groupe base et base-devel
+pacstrap /mnt base base-devel grub xorg-server xorg-xinit xorg-server-utils xf86-video-ati xorg-fonts-type1 ttf-dejavu artwiz-fonts font-bh-ttf font-bitstream-speedo gsfonts sdl_ttf ttf-bitstream-vera ttf-cheapskate ttf-liberation ttf-freefont ttf-arphic-uming ttf-baekmuk #rajoutez au bout de cette ligne touts les paquets que vous souhaitez installer et modifiez xf86-video-ati par votre pilote graphique
+echo création du fstab
+genfstab -U -p /mnt >> /mnt/etc/fstab
+echo Chroot de l environnement créer
+arch-chroot /mnt

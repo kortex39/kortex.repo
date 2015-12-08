@@ -1,0 +1,16 @@
+#!/bin/bash
+read -e -p "hostname (ex myhostname)" HOSTNAME
+echo $HOSTNAME
+echo $HOSTNAME >> /etc/hostname
+read -e -p "génération de la locale (ex: fr_FR.UTF-8 UTF-8) " LOCALE
+echo $LOCALE > /etc/locale.gen
+locale-gen
+echo LANG=fr_FR.UTF-8 >> /etc/locale.conf
+export LANG=fr_FR.UTF-8
+echo KEYMAP=fr-pc >> /etc/vconsole.conf
+ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+mkinitcpio -p linux
+grub-install --no-floppy --recheck /dev/sda
+grub-mkconfig -o  /boot/grub/grub.cfg
+passwd
+exit 0

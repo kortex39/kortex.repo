@@ -1,0 +1,30 @@
+#!/bin/bash
+#developper par BenDeLaMandavit
+#echo Script de montage et de Chroot Essai 001
+
+# Montage des fichiers utils
+
+sudo mount --bind /proc squashfs/proc
+sudo mount --bind /sys squashfs/sys
+sudo mount -t devpts none squashfs/dev/pts
+sudo mount --bind /dev squashfs/dev
+sudo mount --bind /dev/pts squashfs/dev/pts
+sudo mount --bind /var/run/dbus/ squashfs/var/run/dbus/
+sudo mount --bind /user/share/ squashfs/user/share/
+
+# Copie des fichiers .conf
+
+sudo cp /etc/resolv.conf squashfs/etc/resolv.conf
+sudo cp /etc/apt/sources.list squashfs/etc/apt/sorces.list
+
+# Autorisation ServeurX
+
+xhost +
+
+echo Montage terminé
+
+# Chroot
+
+sudo chroot squashfs
+
+exit 0

@@ -1,0 +1,26 @@
+#!/bin/bash
+# developper par BenDeLaMandavit
+echo Script de sortie de Chroot
+
+umount -lf /sys
+umount -lf /proc
+umount -lf /dev/pts
+umount -lf /dev/squashfs/dev
+
+# Suppression des fichiers .conf #
+
+echo Suppression de resolv.conf
+
+rm /etc/resolv.conf
+
+# restriction de xhost #
+
+echo restriction de Xserver
+
+xhost -
+
+echo Sortie de Chroot
+
+exit
+
+exit 0
